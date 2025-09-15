@@ -8,7 +8,7 @@ plugins {
 }
 
 spotbugs {
-    toolVersion = "4.7.3"
+    toolVersion = "3.18.0"
     effort = "max"
     reportLevel = "high"
 }
