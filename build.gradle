@@ -8,7 +8,7 @@ plugins {
 }
 
 spotbugs {
-    toolVersion = "3.18.0"
+    toolVersion = "4.9.4"
     effort = "max"
     reportLevel = "high"
 }
@@ -39,6 +39,16 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+configurations.configureEach {
+    resolutionStrategy.eachDependency { details ->
+        if (details.requested.group == 'org.apache.commons' &&
+                details.requested.name == 'commons-lang3') {
+            details.useVersion '3.18.0'
+            details.because 'Fix high severity vulnerability reported by Snyk'
+        }
+    }
 }
 
 tasks.named('test') {
