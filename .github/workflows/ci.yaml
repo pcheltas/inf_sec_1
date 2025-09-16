@@ -48,7 +48,15 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
       - name: Run Snyk scan
-        run: snyk test --all-projects
+        run: |
+          snyk test --all-projects --json > snyk-report.json
+          npx snyk-to-html -i snyk-report.json -o snyk-report.html
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+      - name: Upload snyk report
+        uses: actions/upload-artifact@v4
+        with:
+          name: snyk-html-report
+          path: snyk-report.html
 
