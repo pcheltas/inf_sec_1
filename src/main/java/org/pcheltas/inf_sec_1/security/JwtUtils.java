@@ -3,6 +3,7 @@ package org.pcheltas.inf_sec_1.security;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import jakarta.annotation.PostConstruct;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -17,13 +18,14 @@ import javax.crypto.SecretKey;
 
 @Component
 public class JwtUtils {
-
-    private final SecretKey secretKey;
+    @Value("${token.signing.key:default-secret-key}")
+    private String SECRET_KEY;
+    private SecretKey secretKey;
     private static final long EXPIRATION_MS = 3600000;
 
-    public JwtUtils(@Value("${token.signing.key}") String secret) {
-        System.out.println(secret);
-        this.secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+    @PostConstruct
+    void createKey() {
+        secretKey = Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
     }
 
     public String generateToken(String username) {

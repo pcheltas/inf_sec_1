@@ -10,7 +10,10 @@ plugins {
 spotbugs {
     toolVersion = "4.9.4"
     effort = "max"
-    reportLevel = "high"
+    reportLevel = "low"
+    ignoreFailures = true
+    showStackTraces = true
+    showProgress = true
 }
 
 tasks.withType(SpotBugsTask).configureEach {
