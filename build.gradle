@@ -15,9 +15,13 @@ spotbugs {
 
 tasks.withType(SpotBugsTask).configureEach {
     reports {
-        html.required.set(true)
-        xml.required.set(false)
-        html.stylesheet.set(project.resources.text.fromFile("${rootDir}/config/spotbugs/fancy-hist.xsl"))
+        html {
+            required = true
+            stylesheet = 'fancy-hist.xsl'
+        }
+        xml {
+            required = false
+        }
     }
 }
 
