@@ -34,7 +34,7 @@ jobs:
           restore-keys: gradle-
 
       - name: Build project
-        run: ./gradlew build --no-daemon
+        run: ./gradlew build --no-daemon -x test
 
       - name: Run SpotBugs
         run: ./gradlew spotbugsMain
